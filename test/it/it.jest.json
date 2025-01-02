@@ -4,7 +4,7 @@
   "testEnvironment": "node",
   "testRegex": ".it.spec.ts$",
   "transform": {
-    "^.+\\.(t|j)s$": "ts-jest"
+    "^.+\\.(t|j)s$": "@swc/jest"
   },
   "globalSetup": "./test/it/setup.ts",
   "globalTeardown": "./test/it/down.ts"
