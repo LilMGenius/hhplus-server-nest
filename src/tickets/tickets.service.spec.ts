@@ -13,11 +13,11 @@ describe('TicketsService', () => {
   });
 
   it('should return available dates', () => {
-    expect(service.getAvailableDates()).toEqual(['2025-01-10', '2025-01-11']);
+    expect(service.getAvailableDates()).toEqual(['2025-01-23', '2025-01-24']);
   });
 
   it('should reserve a seat', () => {
-    const result = service.reserveSeat({ date: '2025-01-10', seat_id: 1 });
+    const result = service.reserveSeat({ date: '2025-01-23', seat_id: 1 });
     expect(result.status).toBe('reserved');
   });
 });

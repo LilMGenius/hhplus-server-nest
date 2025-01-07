@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
+import { ProcessPaymentDto } from './dto/process-payment.dto';
 
 @Injectable()
 export class PaymentService {
-  processPayment({ ticket_id, seat_id, date }: { ticket_id: string; seat_id: number; date: string }) {
+  processPayment({ ticket_id, seat_id, date }: ProcessPaymentDto) {
     return {
       status: 'success',
       receipt: {
