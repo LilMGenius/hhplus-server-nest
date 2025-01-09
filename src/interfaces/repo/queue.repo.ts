@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Queue } from 'src/interfaces/entities/queue.entity';
+import { CreateQueueDto } from 'src/app/user/dto/create-queue.dto';
 
 @Injectable()
 export class QueueRepo {
@@ -10,8 +11,8 @@ export class QueueRepo {
     private readonly repo: Repository<Queue>,
   ) {}
 
-  async create(queue: Partial<Queue>): Promise<Queue> {
-    const newQueue = this.repo.create(queue);
+  async create(createQueueDto: CreateQueueDto): Promise<Queue> {
+    const newQueue = this.repo.create(createQueueDto);
     return this.repo.save(newQueue);
   }
 

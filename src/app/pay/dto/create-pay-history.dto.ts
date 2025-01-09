@@ -1,6 +1,6 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsUUID, IsEnum, IsString, IsDate } from "class-validator";
-import { PayHistoryType } from "src/shared/const/enum.const";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsInt, IsUUID, IsEnum, IsString, IsDate } from 'class-validator';
+import { PayHistoryType } from 'src/shared/const/enum.const';
 
 export class CreatePayHistoryDto {
   @ApiProperty({ description: 'Associated ticketing ID' })
@@ -38,4 +38,8 @@ export class CreatePayHistoryDto {
   @ApiProperty({ description: 'Points after the transaction' })
   @IsInt()
   pointAfter: number;
+
+  @ApiProperty({ description: 'Creation date of the transaction' })
+  @IsDate()
+  createdAt?: Date;
 }

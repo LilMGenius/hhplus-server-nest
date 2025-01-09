@@ -13,20 +13,23 @@ export class UserService {
   ) {}
 
   async createUser(createUserDto: CreateUserDto) {
-    return this.userRepo.create(createUserDto);
+    return this.userRepo.create({
+      ...createUserDto,
+      createdAt: new Date(),
+    });
   }
 
   async getPoint(userId: string) {
     const user = await this.userRepo.findById(userId);
-    if (!user) throw new Error('User not found');
+    if (!user) {
+      throw new Error('User not found');
+    }
     return user.point;
   }
 
   async updatePoint(userId: string, updateUserDto: UpdateUserDto) {
-    const user = await this.userRepo.findById(userId);
-    if (!user) throw new Error('User not found');
-    user.point = updateUserDto.point;
-    return this.userRepo.update(userId, user);
+    const user = await this.userRepo.update(userId, updateUserDto);
+    return user.point;
   }
 
   async createQueue(userId: string) {

@@ -19,6 +19,10 @@ export class CreateTicketDto {
   @IsInt()
   remainSeats: number;
 
+  @ApiProperty({ description: 'Creation date of the ticket' })
+  @IsDate()
+  createdAt?: Date;
+
   @ApiProperty({ description: 'Opening date of the ticket', required: false })
   @IsOptional()
   @IsDate()

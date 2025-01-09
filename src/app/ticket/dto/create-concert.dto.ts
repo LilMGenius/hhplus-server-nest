@@ -9,4 +9,8 @@ export class CreateConcertDto {
   @ApiProperty({ description: 'Date of the concert' })
   @IsDate()
   concertDate: Date;
+
+  @ApiProperty({ description: 'Creation date of the concert' })
+  @IsDate()
+  createdAt?: Date;
 }

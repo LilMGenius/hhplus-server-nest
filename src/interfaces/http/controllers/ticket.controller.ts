@@ -15,6 +15,13 @@ export class TicketController {
     return this.ticketFacade.getTicketsByStatus(ticketStatus);
   }
 
+  @Get('dates')
+  @ApiOperation({ summary: 'Get all available dates for OPEN tickets' })
+  @ApiResponse({ status: 200, description: 'Available dates retrieved successfully.' })
+  async getAvailableDates() {
+    return this.ticketFacade.getAvailableDates();
+  }
+
   @Get('seat/:ticketId')
   @ApiOperation({ summary: 'Get seats for a ticket' })
   @ApiResponse({ status: 200, description: 'Seats retrieved successfully.' })

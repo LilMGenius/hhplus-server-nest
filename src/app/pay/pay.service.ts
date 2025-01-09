@@ -51,6 +51,7 @@ export class PayService {
       ...createPayHistoryDto,
       pointAfter: user.point,
       pointBefore: user.point + createPayHistoryDto.seatPrice,
+      createdAt: new Date(),
     });
 
     await this.userRepo.update(createPayHistoryDto.userId, user);

@@ -14,6 +14,24 @@ export class TicketService {
     return this.ticketRepo.findByStatus(ticketStatus);
   }
 
+  async getAvailableDates() {
+    const tickets = await this.ticketRepo.findByStatus(TicketStatus.OPEN);
+    const now = new Date();
+
+    const availableDates = new Set<string>();
+
+    for (const ticket of tickets) {
+      const startDate = ticket.openedAt > now ? ticket.openedAt : now;
+      const endDate = ticket.closedAt;
+
+      for (let date = new Date(startDate); date <= endDate; date.setDate(date.getDate() + 1)) {
+        availableDates.add(date.toISOString().split('T')[0]);
+      }
+    }
+
+    return Array.from(availableDates).sort();
+  }
+
   async getSeatsByTicket(ticketId: number) {
     return this.seatRepo.findByTicketId(ticketId);
   }
