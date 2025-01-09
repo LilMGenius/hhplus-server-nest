@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Concert } from "src/concert/entities/concert.entity";
+import { Concert } from "src/interfaces/entities/concert.entity";
 import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column, CreateDateColumn } from "typeorm";
 
 @Entity()

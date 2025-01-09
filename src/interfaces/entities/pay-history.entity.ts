@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Ticketing } from "src/ticketing/entities/ticketing.entity";
-import { User } from "src/user/entities/user.entity";
+import { Ticketing } from "src/interfaces/entities/ticketing.entity";
+import { User } from "src/interfaces/entities/user.entity";
 import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column, CreateDateColumn } from "typeorm";
 
 @Entity()

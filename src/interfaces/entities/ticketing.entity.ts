@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Seat } from "src/seat/entities/seat.entity";
-import { User } from "src/user/entities/user.entity";
+import { Seat } from "src/interfaces/entities/seat.entity";
+import { User } from "src/interfaces/entities/user.entity";
 import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column, CreateDateColumn } from "typeorm";
 
 @Entity()

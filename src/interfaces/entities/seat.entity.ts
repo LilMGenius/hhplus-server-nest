@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Ticket } from "src/ticket/entities/ticket.entity";
+import { Ticket } from "src/interfaces/entities/ticket.entity";
 import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column } from "typeorm";
 
 @Entity()
