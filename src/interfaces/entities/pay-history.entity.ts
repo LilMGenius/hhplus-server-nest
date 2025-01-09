@@ -1,7 +1,15 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { Ticketing } from "src/interfaces/entities/ticketing.entity";
-import { User } from "src/interfaces/entities/user.entity";
-import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column, CreateDateColumn } from "typeorm";
+import { ApiProperty } from '@nestjs/swagger';
+import { Ticketing } from 'src/interfaces/entities/ticketing.entity';
+import { User } from 'src/interfaces/entities/user.entity';
+import { PayHistoryType } from 'src/shared/const/enum.const';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+  Column,
+  CreateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class PayHistory {
@@ -19,9 +27,9 @@ export class PayHistory {
   @JoinColumn({ name: 'userId' })
   userId: string;
 
-  @ApiProperty({ description: 'Type of the payment history', enum: ['SUCCESS', 'FAIL', 'REFUND'] })
-  @Column({ type: 'enum', enum: ['SUCCESS', 'FAIL', 'REFUND'] })
-  historyType: 'SUCCESS' | 'FAIL' | 'REFUND';
+  @ApiProperty({ description: 'Type of the payment history', enum: PayHistoryType })
+  @Column({ type: 'enum', enum: PayHistoryType })
+  historyType: PayHistoryType;
 
   @ApiProperty({ description: 'Name of the concert' })
   @Column()

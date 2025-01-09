@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, IsUUID, IsEnum, IsString, IsDate } from "class-validator";
+import { PayHistoryType } from "src/shared/const/enum.const";
 
 export class CreatePayHistoryDto {
   @ApiProperty({ description: 'Associated ticketing ID' })
@@ -10,9 +11,9 @@ export class CreatePayHistoryDto {
   @IsUUID()
   userId: string;
 
-  @ApiProperty({ description: 'Type of the payment history', enum: ['SUCCESS', 'FAIL', 'REFUND'] })
-  @IsEnum(['SUCCESS', 'FAIL', 'REFUND'])
-  historyType: 'SUCCESS' | 'FAIL' | 'REFUND';
+  @ApiProperty({ description: 'Type of the payment history', enum: PayHistoryType })
+  @IsEnum(PayHistoryType)
+  historyType: PayHistoryType;
 
   @ApiProperty({ description: 'Name of the concert' })
   @IsString()

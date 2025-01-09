@@ -1,6 +1,14 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { Concert } from "src/interfaces/entities/concert.entity";
-import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column, CreateDateColumn } from "typeorm";
+import { ApiProperty } from '@nestjs/swagger';
+import { Concert } from 'src/interfaces/entities/concert.entity';
+import { TicketStatus } from 'src/shared/const/enum.const';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+  Column,
+  CreateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class Ticket {
@@ -13,9 +21,9 @@ export class Ticket {
   @JoinColumn({ name: 'concertId' })
   concertId: number;
 
-  @ApiProperty({ description: 'Status of the ticket', enum: ['WAIT', 'OPEN', 'CLOSE'] })
-  @Column({ type: 'enum', enum: ['WAIT', 'OPEN', 'CLOSE'] })
-  ticketStatus: 'WAIT' | 'OPEN' | 'CLOSE';
+  @ApiProperty({ description: 'Status of the ticket', enum: TicketStatus })
+  @Column({ type: 'enum', enum: TicketStatus })
+  ticketStatus: TicketStatus;
 
   @ApiProperty({ description: 'Total number of seats available' })
   @Column('int')

@@ -1,7 +1,15 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { Seat } from "src/interfaces/entities/seat.entity";
-import { User } from "src/interfaces/entities/user.entity";
-import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column, CreateDateColumn } from "typeorm";
+import { ApiProperty } from '@nestjs/swagger';
+import { Seat } from 'src/interfaces/entities/seat.entity';
+import { User } from 'src/interfaces/entities/user.entity';
+import { TicketingStatus } from 'src/shared/const/enum.const';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+  Column,
+  CreateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class Ticketing {
@@ -19,9 +27,9 @@ export class Ticketing {
   @JoinColumn({ name: 'userId' })
   userId: string;
 
-  @ApiProperty({ description: 'Status of the ticketing', enum: ['PENDING', 'PAID', 'REVOKE'] })
-  @Column({ type: 'enum', enum: ['PENDING', 'PAID', 'REVOKE'] })
-  ticketingStatus: 'PENDING' | 'PAID' | 'REVOKE';
+  @ApiProperty({ description: 'Status of the ticketing', enum: TicketingStatus })
+  @Column({ type: 'enum', enum: TicketingStatus })
+  ticketingStatus: TicketingStatus;
 
   @ApiProperty({ description: 'Creation date of the ticketing record' })
   @CreateDateColumn()

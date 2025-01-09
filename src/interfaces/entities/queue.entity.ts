@@ -1,6 +1,14 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { User } from "src/interfaces/entities/user.entity";
-import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column, CreateDateColumn } from "typeorm";
+import { ApiProperty } from '@nestjs/swagger';
+import { User } from 'src/interfaces/entities/user.entity';
+import { QueueStatus } from 'src/shared/const/enum.const';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+  Column,
+  CreateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class Queue {
@@ -13,9 +21,9 @@ export class Queue {
   @JoinColumn({ name: 'userId' })
   userId: string;
 
-  @ApiProperty({ description: 'Status of the queue', enum: ['WAIT', 'ACTIVE', 'EXPIRY'] })
-  @Column({ type: 'enum', enum: ['WAIT', 'ACTIVE', 'EXPIRY'] })
-  queueStatus: 'WAIT' | 'ACTIVE' | 'EXPIRY';
+  @ApiProperty({ description: 'Status of the queue', enum: QueueStatus })
+  @Column({ type: 'enum', enum: QueueStatus })
+  queueStatus: QueueStatus;
 
   @ApiProperty({ description: 'Creation date of the queue' })
   @CreateDateColumn()
