@@ -14,6 +14,10 @@ export class TicketService {
     return this.ticketRepo.findByStatus(ticketStatus);
   }
 
+  async getSeatsByTicket(ticketId: number) {
+    return this.seatRepo.findByTicketId(ticketId);
+  }
+
   async getAvailableDates() {
     const tickets = await this.ticketRepo.findByStatus(TicketStatus.OPEN);
     const now = new Date();
@@ -30,9 +34,5 @@ export class TicketService {
     }
 
     return Array.from(availableDates).sort();
-  }
-
-  async getSeatsByTicket(ticketId: number) {
-    return this.seatRepo.findByTicketId(ticketId);
   }
 }

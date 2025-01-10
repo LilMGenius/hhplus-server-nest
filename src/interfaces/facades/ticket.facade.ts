@@ -10,11 +10,11 @@ export class TicketFacade {
     return this.ticketService.getTicketsByStatus(ticketStatus);
   }
 
-  async getAvailableDates() {
-    return this.ticketService.getAvailableDates();
-  }
-
   async getSeatsByTicket(ticketId: number) {
     return this.ticketService.getSeatsByTicket(ticketId);
+  }
+
+  async getAvailableDates() {
+    return this.ticketService.getAvailableDates();
   }
 }

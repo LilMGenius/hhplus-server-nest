@@ -1,7 +1,7 @@
-export enum TicketStatus {
+export enum QueueStatus {
   WAIT = 'WAIT',
-  OPEN = 'OPEN',
-  CLOSE = 'CLOSE',
+  ACTIVE = 'ACTIVE',
+  EXPIRY = 'EXPIRY',
 }
 
 export enum SeatStatus {
@@ -9,16 +9,16 @@ export enum SeatStatus {
   EMPTY = 'EMPTY',
 }
 
+export enum TicketStatus {
+  WAIT = 'WAIT',
+  OPEN = 'OPEN',
+  CLOSE = 'CLOSE',
+}
+
 export enum TicketingStatus {
   PENDING = 'PENDING',
   PAID = 'PAID',
   REVOKE = 'REVOKE',
-}
-
-export enum QueueStatus {
-  WAIT = 'WAIT',
-  ACTIVE = 'ACTIVE',
-  EXPIRY = 'EXPIRY',
 }
 
 export enum PayHistoryType {

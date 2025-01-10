@@ -11,6 +11,10 @@ export class UserFacade {
     return this.userService.createUser(createUserDto);
   }
 
+  async updateUser(userId: string, updateUserDto: UpdateUserDto) {
+    return this.userService.updateUser(userId, updateUserDto);
+  }
+
   async getPoint(userId: string) {
     return this.userService.getPoint(userId);
   }

@@ -1,8 +1,8 @@
-import { Controller, Post, Body, Get, Param, Patch } from "@nestjs/common";
-import { ApiTags, ApiOperation, ApiResponse } from "@nestjs/swagger";
-import { CreateUserDto } from "src/app/user/dto/create-user.dto";
-import { UpdateUserDto } from "src/app/user/dto/update-user.dto";
-import { UserFacade } from "src/interfaces/facades/user.facade";
+import { Controller, Post, Body, Get, Param, Patch } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { CreateUserDto } from 'src/app/user/dto/create-user.dto';
+import { UpdateUserDto } from 'src/app/user/dto/update-user.dto';
+import { UserFacade } from 'src/interfaces/facades/user.facade';
 
 @ApiTags('USER')
 @Controller('user')
@@ -16,38 +16,45 @@ export class UserController {
     return this.userFacade.createUser(createUserDto);
   }
 
-  @Get(':id/point')
+  @Patch(':userId')
+  @ApiOperation({ summary: 'Update user details' })
+  @ApiResponse({ status: 200, description: 'User details updated successfully.' })
+  async updateUser(@Param('userId') userId: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.userFacade.updateUser(userId, updateUserDto);
+  }
+
+  @Get(':userId/point')
   @ApiOperation({ summary: 'Get user points' })
   @ApiResponse({ status: 200, description: 'User points retrieved successfully.' })
-  async getPoint(@Param('id') userId: string) {
+  async getPoint(@Param('userId') userId: string) {
     return this.userFacade.getPoint(userId);
   }
 
-  @Patch(':id/point')
-  @ApiOperation({ summary: 'Partially update user points (charge or deduct)' })
+  @Patch(':userId/point')
+  @ApiOperation({ summary: 'Update user points (charge or deduct)' })
   @ApiResponse({ status: 200, description: 'User points updated successfully.' })
-  async updatePoint(@Param('id') userId: string, @Body() updateUserDto: UpdateUserDto) {
+  async updatePoint(@Param('userId') userId: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userFacade.updatePoint(userId, updateUserDto);
   }
 
-  @Post(':id/queue')
+  @Post(':userId/queue')
   @ApiOperation({ summary: 'Create a queue for user and generate token' })
   @ApiResponse({ status: 201, description: 'Queue created successfully with token.' })
-  async createQueue(@Param('id') userId: string) {
+  async createQueue(@Param('userId') userId: string) {
     return this.userFacade.createQueue(userId);
   }
 
-  @Get(':id/queue/status')
+  @Get(':userId/queue/status')
   @ApiOperation({ summary: 'Get user queue status' })
   @ApiResponse({ status: 200, description: 'Queue status retrieved successfully.' })
-  async getQueueStatus(@Param('id') userId: string) {
+  async getQueueStatus(@Param('userId') userId: string) {
     return this.userFacade.getQueueStatus(userId);
   }
 
-  @Post(':id/queue/clear')
+  @Post(':userId/queue/clear')
   @ApiOperation({ summary: 'Clear the user queue' })
   @ApiResponse({ status: 200, description: 'Queue cleared successfully.' })
-  async clearQueue(@Param('id') userId: string) {
+  async clearQueue(@Param('userId') userId: string) {
     return this.userFacade.clearQueue(userId);
   }
 }

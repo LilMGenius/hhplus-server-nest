@@ -6,7 +6,7 @@ import { SeatRepo } from 'src/interfaces/repo/seat.repo';
 import { TicketRepo } from 'src/interfaces/repo/ticket.repo';
 import { TicketingRepo } from 'src/interfaces/repo/ticketing.repo';
 import { PayHistoryRepo } from 'src/interfaces/repo/pay-history.repo';
-import { SeatStatus, TicketingStatus } from 'src/shared/const/enum.const';
+import { SeatStatus, TicketingStatus, PayHistoryType } from 'src/shared/const/enum.const';
 
 @Injectable()
 export class PayService {
@@ -17,6 +17,28 @@ export class PayService {
     private readonly payHistoryRepo: PayHistoryRepo,
     private readonly userRepo: UserRepo,
   ) {}
+
+  async pay(createPayHistoryDto: CreatePayHistoryDto) {
+    const user = await this.userRepo.findById(createPayHistoryDto.userId);
+    if (!user) throw new Error('User not found');
+
+    const isPayable = user.point >= createPayHistoryDto.seatPrice;
+
+    const payHistory = await this.payHistoryRepo.create({
+      ...createPayHistoryDto,
+      historyType: isPayable ? PayHistoryType.SUCCESS : PayHistoryType.FAIL,
+      pointAfter: isPayable ? user.point - createPayHistoryDto.seatPrice : user.point,
+      pointBefore: user.point,
+      createdAt: new Date(),
+    });
+
+    if (isPayable) {
+      user.point -= createPayHistoryDto.seatPrice;
+      await this.userRepo.update(user.userId, { point: user.point });
+    }
+
+    return payHistory;
+  }
 
   async ticketing(createTicketingDto: CreateTicketingDto) {
     const seat = await this.seatRepo.findById(createTicketingDto.seatId);
@@ -38,24 +60,7 @@ export class PayService {
     return ticketing;
   }
 
-  async pay(createPayHistoryDto: CreatePayHistoryDto) {
-    const user = await this.userRepo.findById(createPayHistoryDto.userId);
-    if (!user) throw new Error('User not found');
-    if (user.point < createPayHistoryDto.seatPrice) {
-      throw new Error('Insufficient points');
-    }
-
-    user.point -= createPayHistoryDto.seatPrice;
-
-    const payHistory = await this.payHistoryRepo.create({
-      ...createPayHistoryDto,
-      pointAfter: user.point,
-      pointBefore: user.point + createPayHistoryDto.seatPrice,
-      createdAt: new Date(),
-    });
-
-    await this.userRepo.update(createPayHistoryDto.userId, user);
-
-    return payHistory;
+  async getPayHistoryByUser(userId: string) {
+    return this.payHistoryRepo.findByUserId(userId);
   }
 }

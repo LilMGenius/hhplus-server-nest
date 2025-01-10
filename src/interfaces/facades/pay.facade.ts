@@ -7,11 +7,15 @@ import { PayService } from 'src/app/pay/pay.service';
 export class PayFacade {
   constructor(private readonly payService: PayService) {}
 
+  async pay(createPayHistoryDto: CreatePayHistoryDto) {
+    return this.payService.pay(createPayHistoryDto);
+  }
+
   async ticketing(createTicketingDto: CreateTicketingDto) {
     return this.payService.ticketing(createTicketingDto);
   }
 
-  async pay(createPayHistoryDto: CreatePayHistoryDto) {
-    return this.payService.pay(createPayHistoryDto);
+  async getPayHistoryByUser(userId: string) {
+    return this.payService.getPayHistoryByUser(userId);
   }
 }

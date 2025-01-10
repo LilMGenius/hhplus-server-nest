@@ -19,27 +19,42 @@ export class UserService {
     });
   }
 
+  async updateUser(userId: string, updateUserDto: UpdateUserDto) {
+    return this.userRepo.update(userId, updateUserDto);
+  }
+
   async getPoint(userId: string) {
     const user = await this.userRepo.findById(userId);
     if (!user) {
       throw new Error('User not found');
     }
+
     return user.point;
   }
 
   async updatePoint(userId: string, updateUserDto: UpdateUserDto) {
-    const user = await this.userRepo.update(userId, updateUserDto);
+    const user = await this.userRepo.findById(userId);
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    user.point = updateUserDto.point;
     return user.point;
   }
 
   async createQueue(userId: string) {
-    const queue = await this.queueRepo.create({
+    const existingQueue = await this.queueRepo.findByUserId(userId);
+    if (existingQueue && existingQueue.queueStatus !== QueueStatus.EXPIRY) {
+      throw new Error('User is already in the queue');
+    }
+
+    const newQueue = {
       userId,
       queueStatus: QueueStatus.WAIT,
       createdAt: new Date(),
-      expiredAt: new Date(Date.now() + 30 * 60 * 1000),
-    });
-    return queue;
+      expiredAt: new Date(Date.now() + 10 * 60 * 1000), // 10 minutes from now
+    };
+    return this.queueRepo.create(newQueue);
   }
 
   async getQueueStatus(userId: string) {

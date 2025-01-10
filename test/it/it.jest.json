@@ -1,5 +1,9 @@
 {
   "moduleFileExtensions": ["js", "json", "ts"],
+  "moduleNameMapper": {
+    "^src/(.*)$": "<rootDir>/src/$1"
+  },
+  "modulePathIgnorePatterns": ["<rootDir>/dist/"],
   "rootDir": "../..",
   "testEnvironment": "node",
   "testRegex": ".it.spec.ts$",

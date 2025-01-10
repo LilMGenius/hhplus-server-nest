@@ -15,4 +15,11 @@ export class PayHistoryRepo {
     const newPayHistory = this.repo.create(payHistory);
     return this.repo.save(newPayHistory);
   }
+
+  async findByUserId(userId: string): Promise<PayHistory[]> {
+    return this.repo.find({
+      where: { userId },
+      order: { createdAt: 'DESC' },
+    });
+  }
 }

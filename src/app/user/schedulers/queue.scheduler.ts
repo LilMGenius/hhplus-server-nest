@@ -24,7 +24,7 @@ export class QueueScheduler {
     console.log(`${waitQueues.length} queues activated.`);
   }
 
-  @Cron('*/30 * * * *') // Every 30 minutes
+  @Cron('*/10 * * * *') // Every 10 minutes
   async removeExpiredQueues() {
     const now = new Date();
     const expiredQueues = await this.queueRepo.findExpiredQueues(now);

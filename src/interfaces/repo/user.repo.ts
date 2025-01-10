@@ -27,7 +27,8 @@ export class UserRepo {
       throw new Error('User not found');
     }
 
-    user.point = updateUserDto.point;
+    user.userName = updateUserDto.userName ?? user.userName;
+    user.point = updateUserDto.point ?? user.point;
     return this.repo.save(user);
   }
 }
