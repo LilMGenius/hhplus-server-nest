@@ -37,7 +37,7 @@ export class UserService {
       userId,
       queueStatus: QueueStatus.WAIT,
       createdAt: new Date(),
-      expiredAt: new Date(Date.now() + 5 * 60 * 1000),
+      expiredAt: new Date(Date.now() + 30 * 60 * 1000),
     });
     return queue;
   }
