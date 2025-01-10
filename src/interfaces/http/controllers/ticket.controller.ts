@@ -11,6 +11,7 @@ export class TicketController {
   @Get(':status')
   @ApiOperation({ summary: 'Get tickets by status' })
   @ApiResponse({ status: 200, description: 'Tickets retrieved successfully.' })
+  @ApiResponse({ status: 400, description: 'Invalid ticket status provided.' })
   async getTicketsByStatus(@Param('status') ticketStatus: TicketStatus) {
     return this.ticketFacade.getTicketsByStatus(ticketStatus);
   }
@@ -18,6 +19,8 @@ export class TicketController {
   @Get('seat/:ticketId')
   @ApiOperation({ summary: 'Get seats for a ticket' })
   @ApiResponse({ status: 200, description: 'Seats retrieved successfully.' })
+  @ApiResponse({ status: 404, description: 'Ticket or seats not found.' })
+  @ApiResponse({ status: 400, description: 'Invalid ticket ID provided.' })
   async getSeatsByTicket(@Param('ticketId') ticketId: number) {
     return this.ticketFacade.getSeatsByTicket(ticketId);
   }

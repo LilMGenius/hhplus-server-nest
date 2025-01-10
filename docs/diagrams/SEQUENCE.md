@@ -1,7 +1,9 @@
 # Sequence Diagrams
 
-## 1. Main Process
-![Sequence Diagram of Main Process](./Concert_SeqD_MainProcess.png)
+## 1. User/Ticket
 
-## 2. Balance
-![Sequence Diagram of Balance](./Concert_SeqD_Balance.png)
+![User/Ticket](./Concert_SeqD_UserTicket.png)
+
+## 2. Pay
+
+![Pay](./Concert_SeqD_Pay.png)

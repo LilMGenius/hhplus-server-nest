@@ -12,6 +12,9 @@ export class PayController {
   @Post()
   @ApiOperation({ summary: 'Make a payment for ticketing' })
   @ApiResponse({ status: 201, description: 'Payment processed successfully.' })
+  @ApiResponse({ status: 404, description: 'User, seat, or ticket not found.' })
+  @ApiResponse({ status: 400, description: 'Invalid payment data provided.' })
+  @ApiResponse({ status: 403, description: 'Insufficient points to process payment.' })
   async pay(@Body() createPayHistoryDto: CreatePayHistoryDto) {
     return this.payFacade.pay(createPayHistoryDto);
   }
@@ -19,6 +22,8 @@ export class PayController {
   @Post('ticketing')
   @ApiOperation({ summary: 'Ticketing operation' })
   @ApiResponse({ status: 201, description: 'Seat ticketing successfully.' })
+  @ApiResponse({ status: 404, description: 'Seat or ticket not found.' })
+  @ApiResponse({ status: 400, description: 'Invalid ticketing data provided.' })
   async ticketing(@Body() createTicketingDto: CreateTicketingDto) {
     return this.payFacade.ticketing(createTicketingDto);
   }
@@ -26,6 +31,7 @@ export class PayController {
   @Get(':userId/history')
   @ApiOperation({ summary: 'Get payment history by user ID' })
   @ApiResponse({ status: 200, description: 'Payment history retrieved successfully.' })
+  @ApiResponse({ status: 404, description: 'User not found.' })
   async getPayHistoryByUser(@Param('userId') userId: string) {
     return this.payFacade.getPayHistoryByUser(userId);
   }

@@ -137,15 +137,13 @@ describe('UserService', () => {
 
     jest.spyOn(queueRepo, 'findByUserId').mockImplementation(async () => {
       // Simulate an existing queue check under concurrency
-      return Math.random() > 0.5
-        ? null
-        : {
-            queueId: 1,
-            userId,
-            queueStatus: QueueStatus.WAIT,
-            createdAt: new Date(),
-            expiredAt: new Date(Date.now() + 10 * 60 * 1000),
-          };
+      return {
+        queueId: 1,
+        userId,
+        queueStatus: QueueStatus.WAIT,
+        createdAt: new Date(),
+        expiredAt: new Date(Date.now() + 10 * 60 * 1000),
+      };
     });
 
     const results = await Promise.allSettled([
