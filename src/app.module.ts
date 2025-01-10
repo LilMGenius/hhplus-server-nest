@@ -1,12 +1,11 @@
-import { Module } from "@nestjs/common";
-import { DatabaseModule } from "./database/database.module";
-import { TicketsModule } from './tickets/tickets.module';
-import { BalanceModule } from "./balance/balance.module";
-import { PaymentModule } from "./payment/payment.module";
+import { Module } from '@nestjs/common';
+import { ScheduleModule } from '@nestjs/schedule';
+import { DatabaseModule } from 'src/infra/modules/database.module';
+import { UserModule } from 'src/interfaces/modules/user.module';
+import { TicketModule } from 'src/interfaces/modules/ticket.module';
+import { PayModule } from 'src/interfaces/modules/pay.module';
 
 @Module({
-  imports: [DatabaseModule, TicketsModule, BalanceModule, PaymentModule],
-  controllers: [],
-  providers: [],
+  imports: [ScheduleModule.forRoot(), DatabaseModule, UserModule, TicketModule, PayModule],
 })
 export class AppModule {}

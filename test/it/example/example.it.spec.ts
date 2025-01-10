@@ -1,4 +1,4 @@
-import { DatabaseModule } from "../../../src/database/database.module";
+import { DatabaseModule } from "../../../src/infra/modules/database.module";
 import { Logger } from "@nestjs/common";
 import { Test } from "@nestjs/testing";
 
