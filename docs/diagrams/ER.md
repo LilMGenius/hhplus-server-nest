@@ -27,14 +27,14 @@ erDiagram
         int concert_id PK
         string concert_name
         datetime concert_date
+        int total_seats
+        int remain_seats
         datetime created_at
     }
     TICKET {
         int ticket_id PK
         int concert_id FK
         enum ticket_status "WAIT|OPEN|CLOSE"
-        int total_seats
-        int remain_seats
         datetime created_at
         datetime opened_at
         datetime closed_at
@@ -42,7 +42,7 @@ erDiagram
     SEAT {
         int seat_id PK
         int ticket_id FK
-        enum seat_status "FULL|EMPTY"
+        enum seat_status "FULL|TEMP|EMPTY"
         string seat_code
         int seat_price
     }
