@@ -11,7 +11,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Concert Ticketing API')
-    .setVersion('0.2.1')
+    .setVersion('0.2.2')
     .setDescription('Auto-generated API docs by Swagger for `Concert Ticketing Server`')
     .setContact('@LilMGenius', 'https://github.com/LilMGenius', 'smsmeee@naver.com')
     .addServer(`http://localhost:${appPort}`)

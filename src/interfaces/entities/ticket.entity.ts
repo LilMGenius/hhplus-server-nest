@@ -21,18 +21,12 @@ export class Ticket {
   @Column({ type: 'enum', enum: TicketStatus })
   ticketStatus: TicketStatus;
 
-  @Column('int')
-  totalSeats: number;
-
-  @Column('int')
-  remainSeats: number;
-
   @CreateDateColumn()
   createdAt: Date;
 
-  @Column({ nullable: true })
+  @Column({ type: 'timestamp', nullable: true })
   openedAt: Date;
 
-  @Column({ nullable: true })
+  @Column({ type: 'timestamp', nullable: true })
   closedAt: Date;
 }

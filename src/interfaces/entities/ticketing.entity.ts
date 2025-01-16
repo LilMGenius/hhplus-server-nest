@@ -29,6 +29,6 @@ export class Ticketing {
   @CreateDateColumn()
   createdAt: Date;
 
-  @Column({ nullable: true })
+  @Column({ type: 'timestamp', nullable: true })
   revokedAt: Date;
 }

@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsEnum } from 'class-validator';
+import { IsInt, IsEnum, IsDate, IsOptional } from 'class-validator';
 import { TicketingStatus } from 'src/shared/const/enum.const';
 
 export class UpdateTicketingDto {
@@ -13,4 +13,9 @@ export class UpdateTicketingDto {
   })
   @IsEnum(TicketingStatus)
   ticketingStatus: TicketingStatus;
+
+  @ApiProperty({ description: 'Revokation date of the ticketing', required: false })
+  @IsDate()
+  @IsOptional()
+  revokedAt?: Date;
 }

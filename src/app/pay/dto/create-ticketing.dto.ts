@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsUUID, IsEnum, IsDate } from 'class-validator';
+import { IsInt, IsUUID, IsEnum, IsDate, IsOptional } from 'class-validator';
 import { TicketingStatus } from 'src/shared/const/enum.const';
 
 export class CreateTicketingDto {
@@ -15,7 +15,8 @@ export class CreateTicketingDto {
   @IsEnum(TicketingStatus)
   ticketingStatus: TicketingStatus;
 
-  @ApiProperty({ description: 'Creation date of the ticketing' })
+  @ApiProperty({ description: 'Creation date of the ticketing', required: false })
   @IsDate()
+  @IsOptional()
   createdAt?: Date;
 }

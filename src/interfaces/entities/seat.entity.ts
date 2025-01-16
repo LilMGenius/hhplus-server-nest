@@ -1,6 +1,13 @@
 import { Ticket } from 'src/interfaces/entities/ticket.entity';
 import { SeatStatus } from 'src/shared/const/enum.const';
-import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+  Column,
+  VersionColumn,
+} from 'typeorm';
 
 @Entity()
 export class Seat {
@@ -19,4 +26,7 @@ export class Seat {
 
   @Column('int')
   seatPrice: number;
+
+  @VersionColumn()
+  version: number;
 }

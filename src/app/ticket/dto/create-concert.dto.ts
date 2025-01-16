@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsDate, IsInt } from 'class-validator';
+import { IsString, IsDate, IsInt, IsOptional } from 'class-validator';
 
 export class CreateConcertDto {
   @ApiProperty({ description: 'Name of the concert' })
@@ -18,7 +18,8 @@ export class CreateConcertDto {
   @IsInt()
   remainSeats: number;
 
-  @ApiProperty({ description: 'Creation date of the concert' })
+  @ApiProperty({ description: 'Creation date of the concert', required: false })
   @IsDate()
+  @IsOptional()
   createdAt?: Date;
 }

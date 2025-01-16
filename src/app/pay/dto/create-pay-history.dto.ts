@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsUUID, IsEnum, IsString, IsDate } from 'class-validator';
+import { IsInt, IsUUID, IsEnum, IsString, IsDate, IsOptional } from 'class-validator';
 import { PayHistoryType } from 'src/shared/const/enum.const';
 
 export class CreatePayHistoryDto {
@@ -39,7 +39,8 @@ export class CreatePayHistoryDto {
   @IsInt()
   pointAfter: number;
 
-  @ApiProperty({ description: 'Creation date of the transaction' })
+  @ApiProperty({ description: 'Creation date of the transaction', required: false })
   @IsDate()
+  @IsOptional()
   createdAt?: Date;
 }

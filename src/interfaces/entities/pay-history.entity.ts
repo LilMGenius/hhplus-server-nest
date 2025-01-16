@@ -8,6 +8,8 @@ import {
   JoinColumn,
   Column,
   CreateDateColumn,
+  UpdateDateColumn,
+  VersionColumn,
 } from 'typeorm';
 
 @Entity()
@@ -47,6 +49,9 @@ export class PayHistory {
   @CreateDateColumn()
   createdAt: Date;
 
-  @Column({ nullable: true })
+  @UpdateDateColumn()
   refundedAt: Date;
+
+  @VersionColumn()
+  version: number;
 }

@@ -11,8 +11,8 @@ export class UpdateSeatDto {
   @IsEnum(SeatStatus)
   seatStatus: SeatStatus;
 
-  @ApiProperty({ description: 'New price of the seat' })
-  @IsOptional()
+  @ApiProperty({ description: 'New price of the seat', required: false })
   @IsInt()
+  @IsOptional()
   seatPrice: number;
 }

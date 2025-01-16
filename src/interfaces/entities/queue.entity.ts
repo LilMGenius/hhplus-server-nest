@@ -24,6 +24,6 @@ export class Queue {
   @CreateDateColumn()
   createdAt: Date;
 
-  @Column()
+  @Column({ type: 'timestamp' })
   expiredAt: Date;
 }
