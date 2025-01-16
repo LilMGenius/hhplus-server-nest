@@ -45,6 +45,7 @@ erDiagram
         enum seat_status "FULL|TEMP|EMPTY"
         string seat_code
         int seat_price
+        int version
     }
     TICKETING {
         int ticketing_id PK
@@ -74,6 +75,7 @@ erDiagram
 
         datetime created_at
         datetime refunded_at
+        int version
     }
 
 
