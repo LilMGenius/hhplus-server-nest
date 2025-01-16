@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEnum, IsInt } from 'class-validator';
+import { IsInt, IsEnum } from 'class-validator';
 import { TicketingStatus } from 'src/shared/const/enum.const';
 
 export class UpdateTicketingDto {

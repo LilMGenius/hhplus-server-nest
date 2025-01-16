@@ -11,14 +11,6 @@ export class CreateTicketDto {
   @IsEnum(TicketStatus)
   ticketStatus: TicketStatus;
 
-  @ApiProperty({ description: 'Total number of seats available' })
-  @IsInt()
-  totalSeats: number;
-
-  @ApiProperty({ description: 'Remaining seats available' })
-  @IsInt()
-  remainSeats: number;
-
   @ApiProperty({ description: 'Creation date of the ticket' })
   @IsDate()
   createdAt?: Date;

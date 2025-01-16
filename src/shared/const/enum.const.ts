@@ -6,6 +6,7 @@ export enum QueueStatus {
 
 export enum SeatStatus {
   FULL = 'FULL',
+  TEMP = 'TEMP',
   EMPTY = 'EMPTY',
 }
 
