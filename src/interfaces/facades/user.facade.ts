@@ -11,16 +11,12 @@ export class UserFacade {
     return this.userService.createUser(createUserDto);
   }
 
-  async updateUser(userId: string, updateUserDto: UpdateUserDto) {
-    return this.userService.updateUser(userId, updateUserDto);
+  async updateUser(updateUserDto: UpdateUserDto) {
+    return this.userService.updateUser(updateUserDto);
   }
 
   async getPoint(userId: string) {
     return this.userService.getPoint(userId);
-  }
-
-  async updatePoint(userId: string, updateUserDto: UpdateUserDto) {
-    return this.userService.updatePoint(userId, updateUserDto);
   }
 
   async createQueue(userId: string) {
@@ -33,5 +29,13 @@ export class UserFacade {
 
   async clearQueue(userId: string) {
     return this.userService.clearQueue(userId);
+  }
+
+  async activateWaitQueues() {
+    return this.userService.activateWaitQueues();
+  }
+
+  async removeExpiredQueues() {
+    return this.userService.removeExpiredQueues();
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "hhplus-server-nest",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "",
   "author": "LilMGenius",
   "private": true,
@@ -17,7 +17,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:it": "jest"
+    "test:it": "jest --config ./test/it/it.jest.json"
   },
   "dependencies": {
     "@nestjs/common": "^10.4.15",
@@ -30,10 +30,12 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "mysql2": "^3.12.0",
+    "nest-winston": "^1.10.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "typeorm": "^0.3.20",
-    "uuid": "^11.0.5"
+    "uuid": "^11.0.5",
+    "winston": "^3.17.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.4.9",
@@ -83,7 +85,8 @@
     "collectCoverageFrom": [
       "**/*.(t|j)s"
     ],
-    "coverageDirectory": "../coverage",
+    "coverageDirectory": "./coverage",
     "testEnvironment": "node"
-  }
+  },
+  "type": "commonjs"
 }

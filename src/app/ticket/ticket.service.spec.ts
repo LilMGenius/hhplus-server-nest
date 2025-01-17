@@ -12,8 +12,8 @@ describe('TicketService', () => {
   beforeEach(async () => {
     ticketRepo = {
       findByStatus: jest.fn().mockResolvedValue([
-        { ticketId: 1, openedAt: new Date('2025-01-10'), closedAt: new Date('2025-01-12') },
-        { ticketId: 2, openedAt: new Date('2025-01-11'), closedAt: new Date('2025-01-13') },
+        { ticketId: 1, openedAt: new Date('3025-01-10'), closedAt: new Date('3025-01-12') },
+        { ticketId: 2, openedAt: new Date('3025-01-11'), closedAt: new Date('3025-01-13') },
       ]),
     };
     seatRepo = {
@@ -49,6 +49,6 @@ describe('TicketService', () => {
   it('should retrieve all available dates', async () => {
     const result = await service.getAvailableDates();
     expect(ticketRepo.findByStatus).toHaveBeenCalledWith(TicketStatus.OPEN);
-    expect(result).toEqual(['2025-01-10', '2025-01-11', '2025-01-12', '2025-01-13']);
+    expect(result).toEqual(['3025-01-10', '3025-01-11', '3025-01-12', '3025-01-13']);
   });
 });

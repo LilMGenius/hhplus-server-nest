@@ -1,6 +1,6 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsEnum, IsString } from "class-validator";
-import { SeatStatus } from "src/shared/const/enum.const";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsInt, IsEnum, IsString, IsDate, IsOptional } from 'class-validator';
+import { SeatStatus } from 'src/shared/const/enum.const';
 
 export class CreateSeatDto {
   @ApiProperty({ description: 'Associated ticket ID' })
@@ -18,4 +18,9 @@ export class CreateSeatDto {
   @ApiProperty({ description: 'Price of the seat' })
   @IsInt()
   seatPrice: number;
+
+  @ApiProperty({ description: 'Update date of the seat', required: false })
+  @IsDate()
+  @IsOptional()
+  updatedAt?: Date;
 }

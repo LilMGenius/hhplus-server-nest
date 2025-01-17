@@ -1,7 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsInt, IsOptional } from 'class-validator';
+import { IsString, IsOptional, IsInt, IsDate, IsUUID } from 'class-validator';
 
 export class UpdateUserDto {
+  @ApiProperty({ description: 'User ID to update' })
+  @IsUUID()
+  userId: string;
+
   @ApiProperty({ description: 'New name of the user', required: false })
   @IsString()
   @IsOptional()

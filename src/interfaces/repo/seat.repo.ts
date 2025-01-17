@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Repository, OptimisticLockVersionMismatchError, LessThanOrEqual } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Seat } from 'src/interfaces/entities/seat.entity';
 import { SeatStatus } from 'src/shared/const/enum.const';
@@ -14,12 +14,16 @@ export class SeatRepo {
   ) {}
 
   async create(createSeatDto: CreateSeatDto): Promise<Seat> {
+    createSeatDto.updatedAt = createSeatDto.updatedAt ?? new Date();
     const newSeat = this.repo.create(createSeatDto);
     return this.repo.save(newSeat);
   }
 
-  async findById(seatId: number): Promise<Seat | null> {
-    return this.repo.findOne({ where: { seatId } });
+  async findById(seatId: number, version?: number): Promise<Seat | null> {
+    if (!version) {
+      return this.repo.findOne({ where: { seatId } });
+    }
+    return this.repo.findOne({ where: { seatId }, lock: { mode: 'optimistic', version } });
   }
 
   async findByTicketId(ticketId: number): Promise<Seat[]> {
@@ -31,13 +35,39 @@ export class SeatRepo {
   }
 
   async update(updateSeatDto: UpdateSeatDto): Promise<Seat> {
-    const seat = await this.findById(updateSeatDto.seatId);
+    // const seat = await this.findById(updateSeatDto.seatId);
+    const seat = await this.findById(updateSeatDto.seatId, updateSeatDto.version);
     if (!seat) {
       throw new Error('Seat not found');
+    }
+    if (seat.version !== updateSeatDto.version) {
+      throw new OptimisticLockVersionMismatchError(
+        JSON.stringify(seat),
+        updateSeatDto.version,
+        seat.version,
+      );
     }
 
     seat.seatStatus = updateSeatDto.seatStatus;
     seat.seatPrice = updateSeatDto.seatPrice ?? seat.seatPrice;
-    return this.repo.save(seat);
+    seat.updatedAt = updateSeatDto.updatedAt ?? seat.updatedAt;
+
+    try {
+      return await this.repo.save(seat);
+    } catch (error) {
+      if (error instanceof OptimisticLockVersionMismatchError) {
+        throw new Error('Seat update failed due to version conflict');
+      }
+      throw error;
+    }
+  }
+
+  async findExpiredSeats(fiveMinutesAgo: Date): Promise<Seat[]> {
+    return this.repo.find({
+      where: {
+        seatStatus: SeatStatus.TEMP,
+        updatedAt: LessThanOrEqual(fiveMinutesAgo),
+      },
+    });
   }
 }

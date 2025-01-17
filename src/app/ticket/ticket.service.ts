@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { SeatRepo } from 'src/interfaces/repo/seat.repo';
 import { TicketRepo } from 'src/interfaces/repo/ticket.repo';
-import { TicketStatus } from 'src/shared/const/enum.const';
+import { SeatStatus, TicketStatus } from 'src/shared/const/enum.const';
 
 @Injectable()
 export class TicketService {
@@ -34,5 +34,21 @@ export class TicketService {
     }
 
     return Array.from(availableDates).sort();
+  }
+
+  async releaseExpiredSeats() {
+    const now = new Date();
+    const fiveMinutesAgo = new Date(now.getTime() - 5 * 60 * 1000); // 5 minutes ago
+    const expiredSeats = await this.seatRepo.findExpiredSeats(fiveMinutesAgo);
+
+    for (const seat of expiredSeats) {
+      await this.seatRepo.update({
+        ...seat,
+        seatId: seat.seatId,
+        seatStatus: SeatStatus.EMPTY,
+      });
+    }
+
+    return expiredSeats.length;
   }
 }

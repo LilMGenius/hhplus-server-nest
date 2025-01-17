@@ -9,23 +9,23 @@ describe('UserService', () => {
   let service: UserService;
   let userRepo: Partial<UserRepo>;
   let queueRepo: Partial<QueueRepo>;
+  const userId = uuidv4();
 
   beforeEach(async () => {
     userRepo = {
       create: jest.fn().mockResolvedValue({
-        userId: uuidv4(),
+        userId,
         userName: 'Seonmin Lee',
         point: 0,
         createdAt: new Date(),
       }),
       findById: jest.fn().mockResolvedValue({
-        userId: uuidv4(),
+        userId,
         userName: 'Seonmin Lee',
         point: 100,
-        createdAt: new Date(),
       }),
       update: jest.fn().mockResolvedValue({
-        userId: uuidv4(),
+        userId,
         point: 150,
       }),
     };
@@ -33,7 +33,7 @@ describe('UserService', () => {
     queueRepo = {
       create: jest.fn().mockResolvedValue({
         queueId: 1,
-        userId: uuidv4(),
+        userId,
         queueStatus: QueueStatus.WAIT,
         createdAt: new Date(),
         expiredAt: new Date(Date.now() + 10 * 60 * 1000),
@@ -55,18 +55,15 @@ describe('UserService', () => {
 
   // User tests
   it('should create a new user', async () => {
-    const userId = uuidv4();
     const dto = { userName: 'Seonmin Lee' };
-    const result = await service.createUser(dto);
+    await service.createUser(dto);
 
     expect(userRepo.create).toHaveBeenCalledWith(
       expect.objectContaining({ userName: 'Seonmin Lee', createdAt: expect.any(Date) }),
     );
-    expect(result.userName).toBe('Seonmin Lee');
   });
 
   it('should retrieve user points', async () => {
-    const userId = uuidv4();
     const result = await service.getPoint(userId);
 
     expect(userRepo.findById).toHaveBeenCalledWith(userId);
@@ -74,26 +71,23 @@ describe('UserService', () => {
   });
 
   it('should update user points', async () => {
-    const userId = uuidv4();
-    const dto = { point: 150 };
-    const result = await service.updatePoint(userId, dto);
+    const dto = { userId, point: 150 };
+    await service.updateUser(dto);
 
-    expect(userRepo.findById).toHaveBeenCalledWith(userId);
-    expect(result).toBe(150);
+    expect(userRepo.update).toHaveBeenCalledWith(expect.objectContaining({ userId, point: 150 }));
   });
 
   it('should update user info', async () => {
-    const userId = uuidv4();
-    const dto = { userName: 'Jini Hwang' };
-    const result = await service.updateUser(userId, dto);
+    const dto = { userId, userName: 'Jini Hwang' };
+    await service.updateUser(dto);
 
-    expect(userRepo.update).toHaveBeenCalledWith(userId, dto);
-    expect(result.userName).toBeUndefined();
+    expect(userRepo.update).toHaveBeenCalledWith(
+      expect.objectContaining({ userId, userName: 'Jini Hwang' }),
+    );
   });
 
   // Queue tests
   it('should create a queue for a user', async () => {
-    const userId = uuidv4();
     const result = await service.createQueue(userId);
 
     expect(queueRepo.create).toHaveBeenCalledWith(
@@ -108,7 +102,6 @@ describe('UserService', () => {
   });
 
   it('should retrieve the queue status', async () => {
-    const userId = uuidv4();
     const queue = {
       queueId: 1,
       userId,
@@ -121,11 +114,10 @@ describe('UserService', () => {
     const result = await service.getQueueStatus(userId);
 
     expect(queueRepo.findByUserId).toHaveBeenCalledWith(userId);
-    expect(result.queueStatus).toBe(QueueStatus.ACTIVE);
+    expect(result).toBe(QueueStatus.ACTIVE);
   });
 
   it('should clear the user queue', async () => {
-    const userId = uuidv4();
     await service.clearQueue(userId);
 
     expect(queueRepo.deleteByUserId).toHaveBeenCalledWith(userId);
@@ -133,8 +125,6 @@ describe('UserService', () => {
 
   // Concurrency test
   it('should handle concurrent queue creation gracefully', async () => {
-    const userId = uuidv4();
-
     jest.spyOn(queueRepo, 'findByUserId').mockImplementation(async () => {
       // Simulate an existing queue check under concurrency
       return {
@@ -155,6 +145,6 @@ describe('UserService', () => {
     const failedCreations = results.filter((result) => result.status === 'rejected');
 
     expect(successfulCreations.length + failedCreations.length).toBe(2);
-    expect(failedCreations[0]?.reason.message).toBe('User is already in the queue');
+    expect(failedCreations[0]?.reason.message).toBe('User already in a queue.');
   });
 });

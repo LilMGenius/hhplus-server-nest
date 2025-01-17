@@ -18,14 +18,6 @@ export class QueueRepo {
     return this.repo.save(newQueue);
   }
 
-  async findByUserId(userId: string): Promise<Queue | null> {
-    return this.repo.findOne({ where: { userId } });
-  }
-
-  async deleteByUserId(userId: string): Promise<void> {
-    await this.repo.delete({ userId });
-  }
-
   async update(updateQueueDto: UpdateQueueDto): Promise<Queue> {
     const queue = await this.findByUserId(updateQueueDto.userId);
     if (!queue) {
@@ -34,6 +26,14 @@ export class QueueRepo {
 
     queue.queueStatus = updateQueueDto.queueStatus;
     return this.repo.save(queue);
+  }
+
+  async findByUserId(userId: string): Promise<Queue | null> {
+    return this.repo.findOne({ where: { userId } });
+  }
+
+  async deleteByUserId(userId: string): Promise<void> {
+    await this.repo.delete({ userId });
   }
 
   async findWaitQueues(limit: number): Promise<Queue[]> {

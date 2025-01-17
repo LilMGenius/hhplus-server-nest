@@ -1,13 +1,15 @@
 {
   "compilerOptions": {
     "module": "commonjs",
+    "target": "ES2021",
+    "moduleResolution": "node",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "ES2021",
     "sourceMap": true,
+    "rootDir": ".",
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
@@ -16,8 +18,8 @@
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,
-    "noImplicitAny": false,
     "strictBindCallApply": false,
+    "noImplicitAny": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false
   }

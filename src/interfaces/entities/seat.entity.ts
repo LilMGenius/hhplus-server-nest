@@ -6,6 +6,7 @@ import {
   ManyToOne,
   JoinColumn,
   Column,
+  UpdateDateColumn,
   VersionColumn,
 } from 'typeorm';
 
@@ -26,6 +27,9 @@ export class Seat {
 
   @Column('int')
   seatPrice: number;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 
   @VersionColumn()
   version: number;

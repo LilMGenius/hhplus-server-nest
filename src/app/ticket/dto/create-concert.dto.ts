@@ -14,9 +14,10 @@ export class CreateConcertDto {
   @IsInt()
   totalSeats: number;
 
-  @ApiProperty({ description: 'Remaining seats available' })
+  @ApiProperty({ description: 'Remaining seats available', required: false })
   @IsInt()
-  remainSeats: number;
+  @IsOptional()
+  remainSeats?: number;
 
   @ApiProperty({ description: 'Creation date of the concert', required: false })
   @IsDate()

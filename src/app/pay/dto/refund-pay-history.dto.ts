@@ -7,7 +7,7 @@ export class RefundPayHistoryDto {
   @IsInt()
   historyId: number;
 
-  @ApiProperty({ description: 'New type of the payment history', enum: PayHistoryType })
+  @ApiProperty({ description: 'New type of the pay history', enum: PayHistoryType })
   @IsEnum(PayHistoryType)
   historyType: PayHistoryType;
 
@@ -15,4 +15,9 @@ export class RefundPayHistoryDto {
   @IsDate()
   @IsOptional()
   refundedAt?: Date;
+
+  @ApiProperty({ description: 'New version of the pay history', required: false })
+  @IsInt()
+  @IsOptional()
+  version?: number;
 }

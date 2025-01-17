@@ -17,4 +17,8 @@ export class TicketFacade {
   async getAvailableDates() {
     return this.ticketService.getAvailableDates();
   }
+
+  async releaseExpiredSeats() {
+    return this.ticketService.releaseExpiredSeats();
+  }
 }

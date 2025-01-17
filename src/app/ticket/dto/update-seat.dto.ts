@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsEnum, IsOptional } from 'class-validator';
+import { IsInt, IsEnum, IsOptional, IsDate } from 'class-validator';
 import { SeatStatus } from 'src/shared/const/enum.const';
 
 export class UpdateSeatDto {
@@ -14,5 +14,15 @@ export class UpdateSeatDto {
   @ApiProperty({ description: 'New price of the seat', required: false })
   @IsInt()
   @IsOptional()
-  seatPrice: number;
+  seatPrice?: number;
+
+  @ApiProperty({ description: 'Update date of the seat', required: false })
+  @IsDate()
+  @IsOptional()
+  updatedAt?: Date;
+
+  @ApiProperty({ description: 'New version of the seat', required: false })
+  @IsInt()
+  @IsOptional()
+  version?: number;
 }

@@ -5,26 +5,24 @@ import { DatabaseConfig, dbConfig } from 'src/infra/configs/database.config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRootAsync(
-      {
-        imports: [
-          ConfigModule.forRoot({
-            load: [dbConfig],
-            envFilePath: `.env`, // .env.${process.env.NODE_ENV}`,
-          }),
-        ],
-        useFactory: (configService: ConfigService) => ({
-          type: 'mysql',
-          ...configService.get<DatabaseConfig>('database'),
-          synchronize: false,
-          autoLoadEntities: true,
-          relationLoadStrategy: 'join',
+    TypeOrmModule.forRootAsync({
+      imports: [
+        ConfigModule.forRoot({
+          load: [dbConfig],
+          envFilePath: `.env`, // .env.${process.env.NODE_ENV}`,
+          isGlobal: true,
         }),
-        inject: [ConfigService],
-      }
-    ),
+      ],
+      useFactory: (configService: ConfigService) => ({
+        type: 'mysql',
+        ...configService.get<DatabaseConfig>('database'),
+        synchronize: true,
+        autoLoadEntities: true,
+        entities: ['**/*.entity{.ts,.js}'],
+        relationLoadStrategy: 'join',
+      }),
+      inject: [ConfigService],
+    }),
   ],
-  controllers: [],
-  providers: [],
 })
 export class DatabaseModule {}

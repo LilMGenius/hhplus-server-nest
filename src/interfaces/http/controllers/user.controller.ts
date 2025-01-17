@@ -22,8 +22,8 @@ export class UserController {
   @ApiResponse({ status: 200, description: 'User details updated successfully.' })
   @ApiResponse({ status: 404, description: 'User not found.' })
   @ApiResponse({ status: 400, description: 'Invalid user update data provided.' })
-  async updateUser(@Param('userId') userId: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userFacade.updateUser(userId, updateUserDto);
+  async updateUser(@Body() updateUserDto: UpdateUserDto) {
+    return this.userFacade.updateUser(updateUserDto);
   }
 
   @Get(':userId/point')
@@ -32,15 +32,6 @@ export class UserController {
   @ApiResponse({ status: 404, description: 'User not found.' })
   async getPoint(@Param('userId') userId: string) {
     return this.userFacade.getPoint(userId);
-  }
-
-  @Patch(':userId/point')
-  @ApiOperation({ summary: 'Update user points (charge or deduct)' })
-  @ApiResponse({ status: 200, description: 'User points updated successfully.' })
-  @ApiResponse({ status: 404, description: 'User not found.' })
-  @ApiResponse({ status: 400, description: 'Invalid point update data provided.' })
-  async updatePoint(@Param('userId') userId: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userFacade.updatePoint(userId, updateUserDto);
   }
 
   @Post(':userId/queue')

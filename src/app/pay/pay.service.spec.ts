@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PayService } from './pay.service';
 import { PayHistoryRepo } from 'src/interfaces/repo/pay-history.repo';
 import { TicketingRepo } from 'src/interfaces/repo/ticketing.repo';
+import { ConcertRepo } from 'src/interfaces/repo/concert.repo';
 import { TicketRepo } from 'src/interfaces/repo/ticket.repo';
 import { SeatRepo } from 'src/interfaces/repo/seat.repo';
 import { UserRepo } from 'src/interfaces/repo/user.repo';
@@ -14,6 +15,7 @@ describe('PayService', () => {
   let userRepo: Partial<UserRepo>;
   let seatRepo: Partial<SeatRepo>;
   let ticketRepo: Partial<TicketRepo>;
+  let concertRepo: Partial<ConcertRepo>;
   let ticketingRepo: Partial<TicketingRepo>;
   let payHistoryRepo: Partial<PayHistoryRepo>;
 
@@ -25,16 +27,24 @@ describe('PayService', () => {
         point: 100,
         createdAt: new Date(),
       }),
-      update: jest.fn().mockResolvedValue(undefined),
+      update: jest.fn(),
     };
     seatRepo = {
       findById: jest.fn().mockResolvedValue({ seatId: 1, seatStatus: 'EMPTY' }),
+      update: jest.fn(),
     };
     ticketRepo = {
       findById: jest.fn().mockResolvedValue({ ticketId: 1 }),
+      update: jest.fn(),
+    };
+    concertRepo = {
+      findById: jest.fn().mockResolvedValue({ concertId: 1, totalSeats: 10 }),
+      update: jest.fn(),
     };
     ticketingRepo = {
       create: jest.fn().mockResolvedValue({ ticketingId: 1 }),
+      findById: jest.fn().mockResolvedValue({ ticketingId: 1, seatId: 1 }),
+      update: jest.fn(),
     };
     payHistoryRepo = {
       create: jest.fn().mockImplementation(async (dto: CreatePayHistoryDto) => {
@@ -51,6 +61,7 @@ describe('PayService', () => {
           createdAt: new Date(),
         };
       }),
+      refund: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -59,6 +70,7 @@ describe('PayService', () => {
         { provide: UserRepo, useValue: userRepo },
         { provide: SeatRepo, useValue: seatRepo },
         { provide: TicketRepo, useValue: ticketRepo },
+        { provide: ConcertRepo, useValue: concertRepo },
         { provide: TicketingRepo, useValue: ticketingRepo },
         { provide: PayHistoryRepo, useValue: payHistoryRepo },
       ],
